@@ -1,0 +1,1289 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hundeführerschein Quiz – Die Hundetrainerinnen</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: rgb(120,49,77);
+    --red-dark: rgb(90,35,57);
+    --red-light: rgb(160,70,105);
+    --cream: rgb(225,225,225);
+    --warm-white: rgb(235,235,235);
+    --brown: #5d3a1a;
+    --brown-light: #8B5E3C;
+    --green: #27ae60;
+    --green-light: #2ecc71;
+    --orange: #e67e22;
+    --text: #2c1810;
+    --text-light: #7f5c4a;
+    --shadow: 0 8px 32px rgba(120,49,77,0.13);
+    --shadow-sm: 0 2px 12px rgba(0,0,0,0.08);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Lato', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Paw print background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23783149' fill-opacity='0.07'%3E%3Cellipse cx='25' cy='20' rx='7' ry='5'/%3E%3Cellipse cx='42' cy='16' rx='5' ry='7'/%3E%3Cellipse cx='14' cy='35' rx='5' ry='7'/%3E%3Cellipse cx='55' cy='30' rx='7' ry='5'/%3E%3Cpath d='M34 38 C28 38 22 44 22 52 C22 60 28 66 34 66 C38 66 40 64 40 64 C40 64 42 66 46 66 C52 66 58 60 58 52 C58 44 52 38 46 38 Z'/%3E%3C/g%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* HEADER */
+  .header {
+    text-align: center;
+    padding: 36px 0 24px;
+  }
+
+  .header .logo-area {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+
+  .paw-logo {
+    font-size: 2.2rem;
+    animation: waggle 2s ease-in-out infinite;
+  }
+
+  @keyframes waggle {
+    0%, 100% { transform: rotate(-10deg); }
+    50% { transform: rotate(10deg); }
+  }
+
+  .header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.6rem, 5vw, 2.6rem);
+    color: var(--red);
+    line-height: 1.15;
+    font-weight: 900;
+  }
+
+  .header .subtitle {
+    font-size: 0.95rem;
+    color: var(--text-light);
+    margin-top: 6px;
+    font-weight: 300;
+    letter-spacing: 0.5px;
+  }
+
+  .divider {
+    width: 60px;
+    height: 3px;
+    background: var(--red);
+    border-radius: 2px;
+    margin: 14px auto 0;
+  }
+
+  /* CARD BASE */
+  .card {
+    background: var(--warm-white);
+    border-radius: 20px;
+    padding: 32px 28px;
+    box-shadow: var(--shadow);
+    border: 1.5px solid rgba(120,49,77,0.1);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--red), var(--red-light), var(--orange));
+  }
+
+  /* START SCREEN */
+  #start-screen { text-align: center; margin-top: 10px; }
+
+  .start-icon {
+    font-size: 4rem;
+    margin-bottom: 16px;
+    display: block;
+    animation: bounce 1.5s ease-in-out infinite;
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+
+  .start-screen-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    color: var(--brown);
+    margin-bottom: 12px;
+  }
+
+  .start-screen-desc {
+    color: var(--text-light);
+    font-size: 0.95rem;
+    line-height: 1.7;
+    margin-bottom: 28px;
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .stats-row {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+  }
+
+  .stat-pill {
+    background: rgba(120,49,77,0.08);
+    border: 1.5px solid rgba(120,49,77,0.2);
+    border-radius: 50px;
+    padding: 10px 20px;
+    font-size: 0.88rem;
+    color: var(--red-dark);
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  /* BUTTONS */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 32px;
+    border-radius: 50px;
+    font-family: 'Lato', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+    transition: all 0.22s ease;
+    letter-spacing: 0.3px;
+    text-decoration: none;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--red), var(--red-light));
+    color: white;
+    box-shadow: 0 4px 18px rgba(120,49,77,0.38);
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(120,49,77,0.45);
+  }
+
+  .btn-primary:active { transform: translateY(0); }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--red);
+    border: 2px solid var(--red);
+  }
+
+  .btn-outline:hover {
+    background: var(--red);
+    color: white;
+    transform: translateY(-2px);
+  }
+
+  /* PROGRESS BAR */
+  .progress-wrapper {
+    margin-bottom: 24px;
+  }
+
+  .progress-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+
+  .progress-label {
+    font-size: 0.82rem;
+    color: var(--text-light);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+
+  .progress-count {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    color: var(--red);
+    font-weight: 700;
+  }
+
+  .progress-bar-bg {
+    height: 10px;
+    background: rgba(120,49,77,0.12);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--red), var(--red-light));
+    border-radius: 10px;
+    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+  }
+
+  .progress-bar-fill::after {
+    content: '';
+    position: absolute;
+    right: 0; top: 0; bottom: 0;
+    width: 20px;
+    background: rgba(255,255,255,0.3);
+    border-radius: 10px;
+  }
+
+  /* XP BAR */
+  .xp-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    background: rgba(120,49,77,0.05);
+    border-radius: 12px;
+    padding: 10px 16px;
+  }
+
+  .xp-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--orange);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    white-space: nowrap;
+  }
+
+  .xp-bar-bg {
+    flex: 1;
+    height: 8px;
+    background: rgba(230,126,34,0.15);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .xp-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--orange), #f1c40f);
+    border-radius: 8px;
+    transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .xp-value {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--orange);
+    white-space: nowrap;
+    min-width: 50px;
+    text-align: right;
+  }
+
+  /* STREAK */
+  .streak-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: linear-gradient(135deg, #ff6b35, #f7b731);
+    color: white;
+    padding: 4px 12px;
+    border-radius: 50px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    margin-bottom: 16px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(255,107,53,0.3);
+  }
+
+  .streak-badge.hidden { opacity: 0; transform: scale(0.8); }
+
+  /* QUESTION */
+  .category-tag {
+    display: inline-block;
+    background: rgba(120,49,77,0.1);
+    color: var(--red-dark);
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 4px 12px;
+    border-radius: 50px;
+    margin-bottom: 14px;
+    border: 1px solid rgba(120,49,77,0.2);
+  }
+
+  .question-text {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1rem, 3vw, 1.2rem);
+    color: var(--brown);
+    line-height: 1.55;
+    margin-bottom: 24px;
+    font-weight: 700;
+  }
+
+  /* ANSWER OPTIONS */
+  .options-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .option-btn {
+    width: 100%;
+    text-align: left;
+    padding: 14px 18px;
+    background: white;
+    border: 2px solid rgba(120,49,77,0.15);
+    border-radius: 14px;
+    cursor: pointer;
+    font-family: 'Lato', sans-serif;
+    font-size: 0.93rem;
+    color: var(--text);
+    line-height: 1.5;
+    transition: all 0.18s ease;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .option-btn:hover:not(:disabled) {
+    border-color: var(--red);
+    background: rgba(120,49,77,0.04);
+    transform: translateX(4px);
+    box-shadow: 0 4px 14px rgba(120,49,77,0.15);
+  }
+
+  .option-letter {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: rgba(120,49,77,0.1);
+    color: var(--red);
+    font-weight: 700;
+    font-size: 0.82rem;
+    flex-shrink: 0;
+    transition: all 0.18s ease;
+  }
+
+  .option-btn:hover:not(:disabled) .option-letter {
+    background: var(--red);
+    color: white;
+  }
+
+  .option-btn.correct {
+    border-color: var(--green);
+    background: rgba(39,174,96,0.08);
+    animation: correctPulse 0.4s ease;
+  }
+
+  .option-btn.correct .option-letter {
+    background: var(--green);
+    color: white;
+  }
+
+  .option-btn.wrong {
+    border-color: var(--red-light);
+    background: rgba(231,76,60,0.08);
+    animation: wrongShake 0.4s ease;
+  }
+
+  .option-btn.wrong .option-letter {
+    background: var(--red-light);
+    color: white;
+  }
+
+  .option-btn:disabled { cursor: default; }
+
+  @keyframes correctPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+    100% { transform: scale(1); }
+  }
+
+  @keyframes wrongShake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-6px); }
+    75% { transform: translateX(6px); }
+  }
+
+  /* FEEDBACK */
+  .feedback-box {
+    border-radius: 14px;
+    padding: 14px 18px;
+    margin-bottom: 18px;
+    font-size: 0.9rem;
+    line-height: 1.55;
+    display: none;
+    align-items: flex-start;
+    gap: 10px;
+    animation: fadeIn 0.3s ease;
+  }
+
+  .feedback-box.show { display: flex; }
+
+  .feedback-box.correct-feedback {
+    background: rgba(39,174,96,0.1);
+    border: 1.5px solid rgba(39,174,96,0.3);
+    color: #1a6b3f;
+  }
+
+  .feedback-box.wrong-feedback {
+    background: rgba(231,76,60,0.08);
+    border: 1.5px solid rgba(231,76,60,0.3);
+    color: #7b1e1e;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* FLOATING SCORE */
+  .floating-score {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: var(--warm-white);
+    border: 1.5px solid rgba(120,49,77,0.2);
+    border-radius: 16px;
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: var(--shadow-sm);
+    z-index: 100;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--brown);
+    backdrop-filter: blur(10px);
+  }
+
+  .score-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--green);
+    box-shadow: 0 0 6px rgba(39,174,96,0.5);
+  }
+
+  /* TOAST NOTIFICATION */
+  .toast {
+    position: fixed;
+    top: 80px;
+    right: 20px;
+    background: var(--brown);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    z-index: 200;
+    transform: translateX(120%);
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+  }
+
+  .toast.show { transform: translateX(0); }
+  .toast.xp-toast { background: linear-gradient(135deg, var(--orange), #f1c40f); color: var(--brown); }
+  .toast.streak-toast { background: linear-gradient(135deg, #ff6b35, #a04669); }
+
+  /* RESULTS */
+  #result-screen { text-align: center; }
+
+  .result-icon {
+    font-size: 4.5rem;
+    display: block;
+    margin-bottom: 12px;
+    animation: celebrate 0.8s ease forwards;
+  }
+
+  @keyframes celebrate {
+    0% { transform: scale(0) rotate(-20deg); }
+    70% { transform: scale(1.15) rotate(5deg); }
+    100% { transform: scale(1) rotate(0deg); }
+  }
+
+  .result-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    color: var(--brown);
+    margin-bottom: 8px;
+    font-weight: 900;
+  }
+
+  .result-subtitle {
+    color: var(--text-light);
+    font-size: 0.95rem;
+    margin-bottom: 28px;
+  }
+
+  .result-score-big {
+    font-family: 'Playfair Display', serif;
+    font-size: 4.5rem;
+    font-weight: 900;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .result-score-big.passed { color: var(--green); }
+  .result-score-big.failed { color: var(--red); }
+
+  .result-score-label {
+    font-size: 0.85rem;
+    color: var(--text-light);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 28px;
+  }
+
+  .result-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+
+  .result-stat {
+    background: rgba(120,49,77,0.05);
+    border-radius: 14px;
+    padding: 16px 10px;
+    border: 1.5px solid rgba(120,49,77,0.1);
+  }
+
+  .result-stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: var(--red);
+    display: block;
+  }
+
+  .result-stat-label {
+    font-size: 0.75rem;
+    color: var(--text-light);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: block;
+    margin-top: 3px;
+  }
+
+  /* BADGES */
+  .badges-section {
+    margin: 24px 0;
+  }
+
+  .badges-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    color: var(--brown);
+    margin-bottom: 14px;
+    text-align: left;
+  }
+
+  .badges-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+  }
+
+  .badge {
+    background: white;
+    border: 2px solid rgba(120,49,77,0.15);
+    border-radius: 14px;
+    padding: 12px 16px;
+    text-align: center;
+    min-width: 90px;
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.2s ease;
+    animation: badgePop 0.5s ease backwards;
+  }
+
+  .badge:hover { transform: scale(1.05); }
+
+  .badge.locked {
+    opacity: 0.4;
+    filter: grayscale(0.8);
+  }
+
+  .badge-icon { font-size: 1.8rem; display: block; margin-bottom: 4px; }
+  .badge-name { font-size: 0.72rem; font-weight: 700; color: var(--text-light); display: block; }
+
+  @keyframes badgePop {
+    from { transform: scale(0); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+
+  /* REVIEW SECTION */
+  .review-section {
+    margin-top: 28px;
+    text-align: left;
+  }
+
+  .review-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    color: var(--brown);
+    margin-bottom: 16px;
+  }
+
+  .review-item {
+    background: white;
+    border-radius: 14px;
+    padding: 16px 18px;
+    margin-bottom: 10px;
+    border-left: 4px solid transparent;
+    box-shadow: var(--shadow-sm);
+    font-size: 0.88rem;
+  }
+
+  .review-item.review-correct { border-left-color: var(--green); }
+  .review-item.review-wrong { border-left-color: var(--red-light); }
+
+  .review-q {
+    font-weight: 700;
+    color: var(--brown);
+    margin-bottom: 6px;
+    line-height: 1.45;
+  }
+
+  .review-a {
+    color: var(--text-light);
+    font-size: 0.82rem;
+    line-height: 1.45;
+  }
+
+  .review-a .correct-ans { color: var(--green); font-weight: 700; }
+  .review-a .wrong-ans { color: var(--red); text-decoration: line-through; }
+
+  /* NEXT BUTTON */
+  .next-btn-wrap {
+    text-align: right;
+    margin-top: 4px;
+  }
+
+  /* RESULT ACTIONS */
+  .result-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 24px;
+  }
+
+  /* LAW TAG */
+  .law-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: rgba(52,73,94,0.08);
+    color: #2c3e50;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 3px 9px;
+    border-radius: 50px;
+    margin-left: 8px;
+    border: 1px solid rgba(52,73,94,0.15);
+    vertical-align: middle;
+  }
+
+  /* TIMER */
+  .timer-display {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.82rem;
+    color: var(--text-light);
+    font-weight: 700;
+  }
+
+  .timer-ring {
+    width: 34px;
+    height: 34px;
+    position: relative;
+  }
+
+  .timer-ring svg {
+    transform: rotate(-90deg);
+  }
+
+  .timer-ring .bg { fill: none; stroke: rgba(120,49,77,0.12); stroke-width: 3; }
+  .timer-ring .fill { fill: none; stroke: var(--red); stroke-width: 3; stroke-dasharray: 88; stroke-dashoffset: 0; transition: stroke-dashoffset 1s linear, stroke 0.5s; stroke-linecap: round; }
+  .timer-ring .fill.warning { stroke: var(--orange); }
+  .timer-ring .fill.danger { stroke: var(--red-light); }
+
+  .timer-num {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    font-weight: 900;
+    color: var(--red);
+    transform: rotate(90deg);
+  }
+
+  .quiz-header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+
+  /* HIDDEN */
+  .hidden { display: none !important; }
+
+  /* RESPONSIVE */
+  @media (max-width: 540px) {
+    .card { padding: 22px 16px; }
+    .result-stats { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .result-stat-num { font-size: 1.4rem; }
+    .floating-score { top: 12px; right: 12px; font-size: 0.78rem; padding: 8px 12px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <header class="header">
+    <div class="logo-area">
+      <span class="paw-logo">🐾</span>
+      <h1>Hundeführerschein Quiz</h1>
+    </div>
+    <p class="subtitle">Von Die Hundetrainerinnen · Wiefelstede & Oldenburg</p>
+    <div class="divider"></div>
+  </header>
+
+  <!-- START SCREEN -->
+  <div id="start-screen" class="card">
+    <span class="start-icon">🐶</span>
+    <h2 class="start-screen-title">Bereit für den Hundeführerschein?</h2>
+    <p class="start-screen-desc">
+      Teste dein Wissen mit 35 zufällig ausgewählten Fragen aus dem offiziellen Fragenkatalog
+      Niedersachsen. Beweise deine Sachkunde – und verdiene dabei Abzeichen!
+    </p>
+    <div class="stats-row">
+      <div class="stat-pill">❓ 35 Fragen</div>
+      <div class="stat-pill">⏱️ 25 Sek. / Frage</div>
+      <div class="stat-pill">🏆 Abzeichen verdienen</div>
+      <div class="stat-pill">✅ 70% zum Bestehen</div>
+    </div>
+    <button class="btn btn-primary" onclick="startQuiz()">
+      🚀 Quiz starten
+    </button>
+  </div>
+
+  <!-- QUIZ SCREEN -->
+  <div id="quiz-screen" class="hidden">
+    <div class="floating-score" id="floating-score">
+      <div class="score-dot"></div>
+      <span id="score-live">0 / 0</span>
+    </div>
+
+    <div class="card">
+      <!-- XP Bar -->
+      <div class="xp-row">
+        <span class="xp-label">⭐ XP</span>
+        <div class="xp-bar-bg">
+          <div class="xp-bar-fill" id="xp-bar" style="width: 0%"></div>
+        </div>
+        <span class="xp-value" id="xp-value">0 XP</span>
+      </div>
+
+      <!-- Streak -->
+      <div class="streak-badge hidden" id="streak-badge">🔥 <span id="streak-count">0</span> Richtig in Folge!</div>
+
+      <!-- Progress -->
+      <div class="progress-wrapper">
+        <div class="progress-header">
+          <span class="progress-label">Fortschritt</span>
+          <div class="timer-display">
+            <div class="timer-ring">
+              <svg width="34" height="34" viewBox="0 0 34 34">
+                <circle class="bg" cx="17" cy="17" r="14"/>
+                <circle class="fill" id="timer-circle" cx="17" cy="17" r="14"/>
+              </svg>
+              <span class="timer-num" id="timer-num">25</span>
+            </div>
+          </div>
+          <span class="progress-count" id="q-count">1 / 35</span>
+        </div>
+        <div class="progress-bar-bg">
+          <div class="progress-bar-fill" id="progress-fill" style="width: 0%"></div>
+        </div>
+      </div>
+
+      <!-- Question Header -->
+      <div class="quiz-header-row">
+        <span class="category-tag" id="category-tag">Allgemein</span>
+      </div>
+
+      <!-- Question -->
+      <p class="question-text" id="question-text"></p>
+
+      <!-- Options -->
+      <ul class="options-list" id="options-list"></ul>
+
+      <!-- Feedback -->
+      <div class="feedback-box" id="feedback-box">
+        <span id="feedback-icon"></span>
+        <span id="feedback-text"></span>
+      </div>
+
+      <!-- Next -->
+      <div class="next-btn-wrap">
+        <button class="btn btn-primary hidden" id="next-btn" onclick="nextQuestion()">
+          Weiter →
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESULT SCREEN -->
+  <div id="result-screen" class="hidden card">
+    <span class="result-icon" id="result-icon"></span>
+    <h2 class="result-title" id="result-title"></h2>
+    <p class="result-subtitle" id="result-subtitle"></p>
+
+    <div class="result-score-big" id="result-pct"></div>
+    <div class="result-score-label">Gesamtergebnis</div>
+
+    <div class="result-stats">
+      <div class="result-stat">
+        <span class="result-stat-num" id="res-correct">0</span>
+        <span class="result-stat-label">✅ Richtig</span>
+      </div>
+      <div class="result-stat">
+        <span class="result-stat-num" id="res-wrong">0</span>
+        <span class="result-stat-label">❌ Falsch</span>
+      </div>
+      <div class="result-stat">
+        <span class="result-stat-num" id="res-xp">0</span>
+        <span class="result-stat-label">⭐ XP</span>
+      </div>
+    </div>
+
+    <div class="badges-section">
+      <div class="badges-title">🏅 Deine Abzeichen</div>
+      <div class="badges-grid" id="badges-grid"></div>
+    </div>
+
+    <div class="result-actions">
+      <button class="btn btn-primary" onclick="startQuiz()">🔄 Nochmal spielen</button>
+      <button class="btn btn-outline" onclick="showReview()">📋 Auswertung</button>
+    </div>
+
+    <div class="review-section hidden" id="review-section">
+      <div class="review-title">📝 Fragenübersicht</div>
+      <div id="review-list"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ─── QUESTION DATA ───────────────────────────────────────────────────────────
+const ALL_QUESTIONS = [
+  // Erziehung & Training
+  { id:1, cat:'Erziehung', law:false, q:'Ab welchem Alter sollte man mit dem Welpen Übungen beginnen?', opts:['Das Alter ist egal, wichtig ist ca. drei Wochen Einleben.','Man kann sofort mit einfachen Übungen anfangen. Wichtig ist, dass er keine Angst hat.','Gehorsamstraining sollte man nicht vor sechs Monaten beginnen.','Die einzige Übung für Welpen ist Stubenreinheit.'], correct:1 },
+  { id:6, cat:'Erziehung', law:false, q:'Stimmt es, dass man älteren Hunden nichts mehr beibringen kann?', opts:['Ja, Hunde die älter als ein Jahr sind, können nichts mehr lernen.','Ab ca. 5 Jahren kann ein Hund nichts Neues mehr lernen.','Nein, aber es ist einfacher, schon mit einem Welpen zu üben.','Nein, man soll erst mit einem halben Jahr beginnen.'], correct:2 },
+  { id:7, cat:'Erziehung', law:false, q:'Ihr Hund möchte mit Ihren neuen Schuhen spielen. Was tun Sie?', opts:['Sie bieten ihm alte Schuhe als Alternative an.','Sie bieten ihm ein Hundespielzeug an und räumen Ihre Schuhe weg.','Sie kaufen ihm ein paar billige Schuhe zum Spielen.','Sie schimpfen ihn aus und schicken ihn streng auf seinen Platz.'], correct:1 },
+  { id:42, cat:'Erziehung', law:false, q:'Wie häufig und wie lange sollte man mit einem Hund üben?', opts:['Einmal am Tag eine Stunde lang.','So häufig wie es geht, aber immer nur kurz.','Täglich zur selben Zeit, Länge abhängig vom Trainingsstand.','Zwei kurze Übungen pro Spaziergang sind ausreichend.'], correct:1 },
+  { id:43, cat:'Erziehung', law:false, q:'Wie kann man vermeiden, dass der Hund durch Strafen das Vertrauen verliert?', opts:['Durch Strafen verliert der Hund immer das Vertrauen, daher ganz darauf verzichten.','Mit einer indirekten Strafe (z. B. Wasserpistole), der Hund darf die Herkunft nicht bemerken.','Wasserpistole kombiniert mit Schimpfen, damit er versteht woher es kam.','Durch Schütteln am Nackenfell und gleichzeitigem Schimpfen.'], correct:1 },
+  { id:44, cat:'Erziehung', law:false, q:'Was kann passieren, wenn man ein bestimmtes Verhalten mit Futter belohnt?', opts:['Der Hund wird dieses Verhalten häufiger zeigen, weil er eine Belohnung erhofft.','Der Hund macht die Handlung nur noch, wenn er Futter sieht.','Der Hund wird unnötig verweichlicht.','Der Hund nimmt den Besitzer als Rudelführer nicht mehr ernst.'], correct:0 },
+  { id:67, cat:'Erziehung', law:false, q:'Der „Nackengriff" mit Schütteln des Hundes im Genick ...', opts:['...ist artgerecht.','...ist eine völlig ungeeignete „Strafmaßnahme".','...empfindet ein Hund als Spiel.','...ist als „Strafmaßnahme" sinnvoll.'], correct:1 },
+  { id:68, cat:'Erziehung', law:false, q:'Welcher der folgenden Strafmaßnahmen ist sinnvoll?', opts:['Drehen auf den Rücken und Festhalten im Halsbereich.','Schütteln am Nackenfell.','Nichtbeachten des Hundes.','Harter Leinenruck.'], correct:2 },
+  { id:90, cat:'Erziehung', law:false, q:'Was muss man bei Übungen mit einem Welpen beachten?', opts:['Stets konsequent und streng umgehen.','Täglich mindestens dreimal eine Stunde üben.','Mit mäßigem Druck und Strenge arbeiten.','Übungen spielerisch aufbauen in stressfreier Atmosphäre.'], correct:3 },
+  { id:111, cat:'Erziehung', law:false, q:'Worauf muss man beim Einsatz von Belohnungen achten?', opts:['Der Hund sollte erst nach mindestens 2 Minuten belohnt werden.','Spielen ist als Belohnung nicht geeignet.','Futterbelohnungen sind nicht geeignet.','Der Hund sollte zunächst immer, später nur noch ab und zu belohnt werden.'], correct:3 },
+  { id:112, cat:'Erziehung', law:false, q:'Ist der Einsatz von Elektroreizgeräten für die Hundeerziehung sinnvoll?', opts:['Ja, es ist einfach und schnell.','Ja, weil der Hund dann weiß, was er nicht machen darf.','Nein, die Gefahr von Fehlverknüpfungen und Angstverhalten ist zu groß.','Nein, die meisten Hunde reagieren gar nicht darauf.'], correct:2 },
+  { id:133, cat:'Erziehung', law:false, q:'Wie lange hat man Zeit, um seinen Hund für eine erwünschte Handlung zu loben?', opts:['Zwischen 30 Sekunden und 2 Minuten.','Genau 5 Minuten.','Maximal 2 Sekunden.','Die Zeit ist nicht wichtig, Hauptsache man lobt.'], correct:2 },
+  { id:204, cat:'Erziehung', law:false, q:'Was kann passieren, wenn man mit dem Hund eine Übung immer nur am gleichen Ort macht?', opts:['Er wird die Übung an anderen Orten gar nicht oder nicht so gut ausführen.','Er wird die Übung überall ausführen, wenn man häufig genug übt.','Der Ort ist nicht wichtig, wichtig ist die Tageszeit.','Er will bald nicht mehr an diesen Ort.'], correct:0 },
+  // Verhalten & Kommunikation
+  { id:29, cat:'Körpersprache', law:false, q:'Ein Hund duckt sich und knurrt. Man streckt ihm die Hand entgegen – er schnappt. Was ist der Grund?', opts:['Er muss früher geschlagen worden sein.','Der Hund hat die Geste des Handausstreckens als Bedrohung empfunden.','Der Hund ist grundsätzlich verhaltensgestört.','Wer sich klein macht, signalisiert Schwäche.'], correct:1 },
+  { id:31, cat:'Körpersprache', law:false, q:'Ein freilaufender Hund klemmt den Schwanz ein und vermeidet Blickkontakt. Was bedeutet das?', opts:['Der andere Hund zeigt sich unterwürfig.','Ihr Hund hat den anderen zum Spiel aufgefordert.','Ihr Hund ist sehr dominant.','Es hat keine Bedeutung.'], correct:0 },
+  { id:33, cat:'Körpersprache', law:false, q:'Welche Körperhaltung zeigt die Spielhaltung beim Hund an?', opts:['Hochgezogene Lefzen, Zähne zeigen, angespannte Muskulatur.','Eingeknickte Vordergliedmaßen, Hinterbeine aufrecht, wedelnde Rute.','Steil aufgestellte Rute, gesträubte Rücken- und Nackenhaare.','Auf dem Rücken liegen, Blickkontakt meiden.'], correct:1 },
+  { id:34, cat:'Körpersprache', law:false, q:'Welche Signale zeigen ängstlich-unterwürfiges Verhalten?', opts:['Blickkontakt halten.','Sich klein machen und ducken.','Ohren aufstellen und wedeln.','Zum Spielen auffordern.'], correct:1 },
+  { id:60, cat:'Körpersprache', law:false, q:'Ein Hund wedelt mit dem Schwanz und erscheint aufgeregt und unruhig. Wie schätzen Sie die Situation ein?', opts:['Schwanzwedeln bedeutet immer Freude.','Schwanzwedeln zeigt Erregung; es könnte Freude, aber auch Stress bedeuten.','Schwanzwedeln zeigt, dass der Hund in jedem Fall freundlich ist.','Schwanzwedeln ist ein eindeutiges Zeichen für Angst.'], correct:1 },
+  { id:61, cat:'Körpersprache', law:false, q:'Achten Hunde auf die Körpersprache von Menschen?', opts:['Ja, Hunde achten sehr auf die Körpersprache von Menschen.','Nur wenn man es ihnen beigebracht hat.','Nein, wie sich Menschen verhalten ist Hunden egal.','Nein, Hunde achten nur auf die Worte.'], correct:0 },
+  { id:85, cat:'Körpersprache', law:false, q:'Sie finden den leer geräumten Küchenmülleimer. Haben Hunde ein schlechtes Gewissen?', opts:['Das kommt auf die Erziehung an.','Nein, sie reagieren auf die Körpersprache ihres aufgebrachten Menschen.','Ja, Hunde können zwischen Gut und Böse unterscheiden.','Das kommt auf die Rasse an.'], correct:1 },
+  { id:160, cat:'Körpersprache', law:false, q:'Welche Körperhaltung zeigt das Imponierverhalten an?', opts:['Hochgezogene Lefzen, Zähne zeigen, angespannte Muskulatur.','Eingeknickte Vordergliedmaßen, Hinterbeine aufrecht, wedelnde Rute.','Steil aufgestellte Rute, durchgedrückte Gelenke, abgewendeter Blick.','Auf dem Rücken liegen, Blickkontakt meiden.'], correct:2 },
+  { id:174, cat:'Körpersprache', law:false, q:'Was bedeutet es, wenn ein Hund die Lefzen hochzieht und seine Zähne zeigt?', opts:['Das Tier hat Hunger.','Zähnezeigen gehört bei Hunden zum Drohverhalten.','Der Hund zeigt an, dass er Zahnschmerzen hat.','Der Hund benötigt sofort Zuwendung.'], correct:1 },
+  // Haltung & Pflege
+  { id:3, cat:'Gesundheit', law:false, q:'Ihr Hund hat seit mehreren Tagen Durchfall und erbricht sich. Was tun Sie?', opts:['Sie konsultieren Ihren Tierarzt.','Erbrechen und Durchfall ist normal, wenn es nicht länger als einen Monat anhält.','Sie füttern ihn mit Trockenfutter, um den Durchfall zu stoppen.','Sie geben ihm eine Schmerztablette.'], correct:0 },
+  { id:16, cat:'Haltung', law:false, q:'Was ist wichtig bei der Trinkwasserversorgung des Hundes?', opts:['Wasser sollte jederzeit in ausreichender Menge zur Verfügung stehen.','Das Trinkwasser sollte abgekocht werden.','Zu dünne Hunde sollten mindestens dreimal wöchentlich Milch bekommen.','Wasser darf nur zu den Fütterungszeiten angeboten werden.'], correct:0 },
+  { id:17, cat:'Haltung', law:false, q:'Was ist bei der Fütterung meines Hundes zu beachten?', opts:['Empfehlenswert ist der Einsatz von altersgerechten Fertigfuttermitteln.','Der Hund sollte immer aus seinem eigenen Napf gefüttert werden.','Junge Hunde größerer Rassen sollten sich jederzeit satt fressen können.','Hunde sollten überwiegend mit Frischfleisch ernährt werden.'], correct:0 },
+  { id:74, cat:'Gesundheit', law:false, q:'Sollten Sie Ihren Hund baden?', opts:['Ja, täglich damit er sauber und keimfrei bleibt.','Ja, etwa alle 1-2 Wochen mit Shampoo.','Ja, aber nur im Bedarfsfall und dann mit einem Hundeshampoo.','Nein, auf keinen Fall.'], correct:2 },
+  { id:142, cat:'Gesundheit', law:false, q:'Gegen welche Krankheiten sollte Ihr Hund mindestens geimpft werden?', opts:['Tollwut, Staupe und Parvovirose.','Leukose und Hunde-AIDS.','Borelliose und Zwingerhusten.','Tetanus.'], correct:0 },
+  { id:219, cat:'Gesundheit', law:false, q:'In welchem Bereich liegt die normale Körpertemperatur des Hundes?', opts:['Im After gemessen um 38,5° C.','Im After gemessen um 36,5° C.','Solange die Nase kühl und feucht ist, hat der Hund kein Fieber.','Kleine Hunde 39,5° C, große Hunde 37° C.'], correct:0 },
+  { id:50, cat:'Haltung', law:false, q:'Wieviel sollte ein ausgewachsener Hund zu fressen bekommen?', opts:['Soviel wie er braucht, damit er eine schlanke Figur hat.','Futter zur freien Verfügung, Hunde fressen nur so viel wie sie brauchen.','Stets genug – ein Fastentag pro Woche ist wichtig.','Immer etwas Hunger, sonst neigen sie zu Ungehorsam.'], correct:0 },
+  // Sozialisation
+  { id:11, cat:'Sozialisation', law:false, q:'Ist es empfehlenswert, dass ein Welpe an professionell geleiteten Welpenspielstunden teilnimmt?', opts:['Ja, aber nur wenn er allein im Wurf war.','Ja, Kontakte mit altersgleichen Hunden unter professioneller Aufsicht sind empfehlenswert.','Nein, er hatte mit Wurfgeschwistern ausreichend Kontakte.','Nein, wenn Sie ausreichend Zeit für ihn aufbringen.'], correct:1 },
+  { id:35, cat:'Sozialisation', law:false, q:'Ihr neuer Welpe ist 9 Wochen alt. Worauf sollten Sie in den nächsten Wochen besonders achten?', opts:['Der Welpe braucht jetzt ausschließlich Ruhe und Liebe.','Es ist sehr wichtig, dass er viele Erfahrungen sammelt und eine Welpenspielgruppe besucht.','Der Welpe ist zu klein für Unternehmungen, seine Sinnesorgane entwickeln sich erst mit 4 Monaten.','Er sollte bis zum Alter von 4 Monaten in stressfreier Umgebung bleiben.'], correct:1 },
+  { id:122, cat:'Sozialisation', law:false, q:'Wann sind Hunde besonders empfänglich für soziale Eindrücke und Umweltreize?', opts:['Ca. 3. bis 14. Lebenswoche.','Ca. 1. bis 3. Lebenswoche.','Während der Läufigkeit der Hündin.','Hunde sind immer gleich empfänglich.'], correct:0 },
+  { id:126, cat:'Sozialisation', law:false, q:'Wie lange sollten die Welpen im Allgemeinen bei der Mutterhündin bleiben?', opts:['4 – 6 Wochen.','8 – 10 Wochen.','14 – 16 Wochen.','16 – 18 Wochen.'], correct:1 },
+  // Rechtliches
+  { id:20, cat:'Recht §', law:true, q:'Ihr Kind beschädigt beim Spaziergang mit Ihrem Hund das Spielzeug anderer Kinder. Wer ist verantwortlich?', opts:['Sie sind für das Handeln Ihres Kindes als auch für den Schaden des Hundes verantwortlich.','Das Kind muss zur Verantwortung gezogen werden.','Die anderen Kinder, die ihr Spielzeug liegen lassen.','Verantwortlich ist natürlich der Hund, denn er hat den Schaden verursacht.'], correct:0 },
+  { id:21, cat:'Recht §', law:true, q:'Ist es in Deutschland erlaubt, Hunde einzuschläfern?', opts:['Nein, das ist in jedem Fall illegal.','Ja, aber nur wenn erhebliche Leiden und Schmerzen zu vermuten sind und keine Behandlung möglich ist.','Ja, da Tiere als Sachwerte zählen.','Ja, wenn der Besitzer das Tier nicht mehr halten kann.'], correct:1 },
+  { id:23, cat:'Recht §', law:true, q:'Darf man seinen Hund neben dem PKW herlaufen lassen?', opts:['Nein, das ist laut Tierschutzgesetz verboten.','Nein, das ist laut Straßenverkehrsordnung verboten.','Ja, wenn der Hund langsam daran gewöhnt wird.','Ja, aber nur auf Feldwegen.'], correct:1 },
+  { id:25, cat:'Recht §', law:true, q:'Darf ich meinen Hund im Auto zurücklassen?', opts:['Ja, grundsätzlich darf ich das immer.','Ja, für kurze Zeit, wenn es nicht zu warm oder zu kalt ist.','Ja, aber dann nur im Kofferraum.','Grundsätzlich darf ich das gar nicht.'], correct:1 },
+  { id:28, cat:'Recht §', law:true, q:'Kann in der freien Landschaft auch außerhalb der Brut- und Setzzeit eine Leinenpflicht gelten?', opts:['Nein, in Niedersachsen gilt die Leinenpflicht nur vom 1. April bis zum 15. Juli.','Ja, eine Leinenpflicht kann von den Feld- und Forstordnungsbehörden festgelegt werden.','Ja, eine Leinenpflicht kann vom Landrat festgelegt werden.','Nein, die Leinenpflicht gilt nur in der Brut- und Setzzeit.'], correct:1 },
+  { id:38, cat:'Recht §', law:true, q:'Welche Konsequenzen ergeben sich in Niedersachsen durch die Brut- und Setzzeit?', opts:['Ich darf in dieser Zeit mit dem Hund in der freien Landschaft nur angeleint spazieren.','Ich darf nicht im Wald spazieren.','Ich darf nur in ausgewiesenen Gebieten spazieren.','Ich darf gar nicht in der freien Landschaft spazieren.'], correct:0 },
+  { id:54, cat:'Recht §', law:true, q:'Wie sollte ein Hundehalter vorbeugen, um rechtlich abgesichert zu sein?', opts:['Indem er nach einem Vorfall einen guten Anwalt aufsucht.','Indem er eine Haftpflichtversicherung abschließt.','Indem er seinen Hund gut erzieht.','Indem er den Erwerb des Tieres der Gemeinde anzeigt.'], correct:1 },
+  { id:156, cat:'Recht §', law:true, q:'Was benötigt ein Hund um innerhalb der EU reisen zu können?', opts:['Tierärztliches Gutachten und EU-Heimtierausweis.','Gültige Tollwutimpfung, Mikrochip und EU-Heimtierausweis.','Mikrochip und Entwurmung. Tollwutimpfung nicht mehr nötig.','Es gibt keine EU-Vorschriften.'], correct:1 },
+  { id:178, cat:'Recht §', law:true, q:'Muss ein Hund in Niedersachsen gekennzeichnet werden?', opts:['Niemand kann vorschreiben, dass ich meinen Hund kennzeichnen muss.','Ja, Hunde älter als 6 Monate müssen durch ein elektronisches Kennzeichen gekennzeichnet werden.','Nein, es reicht die Steuermarke.','Ja, aber nur durch Tätowierung.'], correct:1 },
+  { id:216, cat:'Recht §', law:true, q:'Die Brut- und Setzzeit beschreibt den Zeitraum vom …', opts:['1. April bis zum 15. Juli.','1. April bis zum 1. Juli.','15. April bis zum 1. August.','1. März bis zum 15. Juli.'], correct:0 },
+  // Sicherheit
+  { id:2, cat:'Sicherheit', law:false, q:'Sie gehen mit Ihrem unangeleinten Hund spazieren und eine Gruppe Kinder kommt entgegengerannt. Was tun Sie?', opts:['Sie leinen Ihren Hund an.','Wenn er Kinder nicht beißt, können Sie ihn laufen lassen.','Ihr Hund hat guten Gehorsam, lassen Sie ihn laufen.','Sie rufen den Kindern zu, dass sie stehen bleiben sollen.'], correct:0 },
+  { id:30, cat:'Sicherheit', law:false, q:'Sollte man seinen Hund unbeaufsichtigt mit Kindern spielen lassen?', opts:['Ja, wenn Hund und Kind zusammen leben.','Wenn der Hund die Kinder kennt und mag, ist das kein Problem.','Nein, es kann immer kritische Situationen geben. Aufsicht ist notwendig.','Nur bei kleinen Hunden, die nichts tun können.'], correct:2 },
+  { id:39, cat:'Sicherheit', law:false, q:'Ein fremder Hund knurrt Ihren freilaufenden Hund an. Wie verhalten Sie sich?', opts:['Sie nehmen Ihren Hund schnell hoch.','Sie stellen sich schützend vor Ihren Hund.','Sie wenden sich ab, gehen weg und rufen Ihren Hund zu sich.','Sie bleiben stehen und lassen die Hunde die Situation klären.'], correct:2 },
+  { id:40, cat:'Sicherheit', law:false, q:'Ein Spaziergänger bleibt verängstigt stehen, weil Ihr Hund frei läuft. Was tun Sie?', opts:['Wenn es erlaubt ist und der Hund brav ist, muss man nichts tun.','Sie gehen auf ihn zu und versichern, dass der Hund lieb ist.','Sie rufen Ihren Hund und erklären dem Menschen, dass er Angst hat.','Sie leinen Ihren Hund sofort an.'], correct:3 },
+  { id:84, cat:'Sicherheit', law:false, q:'Ein fremder Hund kommt knurrend und bellend auf Sie zu. Wie verhalten Sie sich?', opts:['Sie drehen sich um und rennen weg.','Sie starren dem Hund in die Augen um ihn abzuschrecken.','Sie wenden sich ruhig ab und schauen dem Hund nicht in die Augen.','Sie drohen dem Hund mit erhobenen Armen.'], correct:2 },
+  { id:104, cat:'Sicherheit', law:false, q:'Wie verhalten Sie sich, wenn Ihr frei laufender Hund einem angeleinten Hund begegnet?', opts:['Ich lasse meinen Hund immer zu dem anderen Hund laufen.','Ich rufe meinen Hund zu mir und leine ihn auch an.','Ich fordere den anderen Hundehalter auf, seinen Hund abzuleinen.','Ich lasse meinen Hund laufen. Nur wenn sie sich nicht verstehen, rufe ich ihn zurück.'], correct:1 },
+  // Biologie & Reproduktion
+  { id:4, cat:'Biologie', law:false, q:'Man ertappt zwei Hunde beim Deckakt in der Phase des „Hängens". Was kann man tun?', opts:['Den Rüden so schnell wie möglich wegreißen.','Den Hund mit einem Leckerli ablenken um den Deckakt zu beenden.','Mit kaltem Wasser übergießen.','Man muss die gesamte Dauer des Deckaktes abwarten.'], correct:3 },
+  { id:5, cat:'Biologie', law:false, q:'Was sollte man beachten, wenn man mit seiner läufigen Hündin spazieren geht?', opts:['Bei der ersten Läufigkeit kann noch nichts passieren.','Man sollte die Hündin während der gesamten Läufigkeit an der Leine führen.','Manche Hündinnen reagieren während der Läufigkeit gegenüber Rüden aggressiver.','Die Hündin setzt während der Läufigkeit oft keinen Harn ab.'], correct:1 },
+  { id:101, cat:'Biologie', law:false, q:'Welche Sätze treffen auf den Eintritt der Geschlechtsreife zu?', opts:['Größere Rassen sind früher geschlechtsreif als kleinere Rassen.','Die Geschlechtsreife tritt ab dem 18. Lebensmonat ein.','Die Geschlechtsreife tritt in der Regel zwischen dem 7. und 12. Lebensmonat ein.','Hündinnen sind früher geschlechtsreif als Rüden.'], correct:2 },
+  { id:119, cat:'Biologie', law:false, q:'Wie alt kann ein Hund werden?', opts:['Ca. 7 Jahre.','Kleine Rassen 3-5 Jahre, große Rassen 16 Jahre.','Abhängig von Größe und Gewicht etwa 8 – 16 Jahre.','25 – 30 Jahre wenn keine Krankheiten auftreten.'], correct:2 },
+  { id:144, cat:'Biologie', law:false, q:'Welches Tier ist der Urahn des heutigen Hundes?', opts:['Der Goldschakal.','Der Wolf.','Der Kojote.','Der Dingo.'], correct:1 },
+  { id:143, cat:'Biologie', law:false, q:'Bis zu welchem Alter bezeichnet man Hunde als „Welpen"?', opts:['Bis zu einem Jahr.','Bis zum Abschluss des 3. bis 4. Lebensmonats.','Bis zur Geschlechtsreife.','Solange sie von der Mutter gesäugt werden.'], correct:1 },
+];
+
+// ─── GAMIFICATION DATA ────────────────────────────────────────────────────────
+// Badge check functions receive: (score, totalQuestions, xp, maxStreak, lawCorrect, lawTotal, fastAnswers)
+const BADGES_DEF = [
+  { id:'first',      icon:'🐾', name:'Erster Schritt',  desc:'Quiz abgeschlossen',          check:(s,q,x,streak) => true },
+  { id:'perfect',    icon:'🏆', name:'Perfekt!',         desc:'100% richtig',                check:(s,q) => s===q },
+  { id:'passed',     icon:'🎓', name:'Bestanden',        desc:'70%+ richtig',                check:(s,q) => s/q >= 0.7 },
+  { id:'streak5',    icon:'🔥', name:'Feuer-Hund',       desc:'5 richtig in Folge',          check:(s,q,x,streak) => streak >= 5 },
+  { id:'xp100',      icon:'⭐', name:'XP-Sammler',       desc:'100+ XP',                     check:(s,q,x) => x >= 100 },
+  { id:'lawmaster',  icon:'⚖️', name:'Gesetzeskenner',  desc:'Alle Rechtsfragen richtig',    check:(s,q,x,streak,lawCorrect,lawTotal) => lawTotal > 0 && lawCorrect === lawTotal },
+  { id:'speedster',  icon:'⚡', name:'Blitz-Antwort',    desc:'5 Fragen in < 5 Sek.',        check:(s,q,x,streak,lc,lt,fast) => fast >= 5 },
+];
+
+// ─── STATE ─────────────────────────────────────────────────────────────────
+let sessionQuestions = []; // the 35 randomly selected questions for this session
+let currentIdx = 0;        // index of the currently displayed question
+let score = 0;             // number of correctly answered questions
+let xp = 0;                // total XP earned this session
+let streak = 0;            // current consecutive correct answers
+let maxStreak = 0;         // highest streak reached this session (for badge check)
+let answered = false;      // whether the current question has been answered (prevents double input)
+let sessionLog = [];       // per-question log: { q, cat, law, correct, yourAnswer, rightAnswer }
+let timerInterval = null;  // reference to the countdown setInterval, stored so it can be cleared
+let timeLeft = 25;         // seconds remaining for the current question
+let lawCorrect = 0;        // law questions answered correctly (for "Gesetzeskenner" badge)
+let lawTotal = 0;          // total law questions seen this session
+let fastAnswers = 0;       // number of correct answers given in under 5 seconds (for "Blitz-Antwort" badge)
+const MAX_QUESTIONS = 35;
+const TIMER_SECONDS = 25;
+
+// ─── HELPERS ──────────────────────────────────────────────────────────────
+// Fisher-Yates shuffle — returns a new shuffled copy of the array
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function showToast(msg, type='default') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show' + (type ? ' '+type+'-toast' : '');
+  clearTimeout(t._timeout);
+  t._timeout = setTimeout(() => { t.className = 'toast'; }, 2200);
+}
+
+// ─── QUIZ LOGIC ───────────────────────────────────────────────────────────
+function startQuiz() {
+  sessionQuestions = shuffle(ALL_QUESTIONS).slice(0, MAX_QUESTIONS);
+  currentIdx = 0; score = 0; xp = 0; streak = 0; maxStreak = 0;
+  answered = false; sessionLog = [];
+  lawCorrect = 0; lawTotal = 0; fastAnswers = 0;
+
+  document.getElementById('start-screen').classList.add('hidden');
+  document.getElementById('result-screen').classList.add('hidden');
+  document.getElementById('quiz-screen').classList.remove('hidden');
+  document.getElementById('review-section').classList.add('hidden');
+
+  updateXPBar();
+  renderQuestion();
+}
+
+function renderQuestion() {
+  const q = sessionQuestions[currentIdx];
+  answered = false;
+
+  // Header
+  document.getElementById('q-count').textContent = `${currentIdx + 1} / ${MAX_QUESTIONS}`;
+  document.getElementById('progress-fill').style.width = `${(currentIdx / MAX_QUESTIONS) * 100}%`;
+  document.getElementById('score-live').textContent = `${score} / ${currentIdx}`;
+
+  // Category tag
+  const catTag = document.getElementById('category-tag');
+  catTag.textContent = q.cat + (q.law ? ' ⚖️' : '');
+
+  // Question
+  document.getElementById('question-text').textContent = q.q;
+
+  // Shuffle answer order — track which shuffled position the correct answer landed at
+  const indices = shuffle([0, 1, 2, 3]);
+  const correctShuffled = indices.indexOf(q.correct); // new position of the correct answer
+
+  const list = document.getElementById('options-list');
+  list.innerHTML = '';
+  const letters = ['A', 'B', 'C', 'D'];
+
+  indices.forEach((origIdx, i) => {
+    const li = document.createElement('li');
+    const btn = document.createElement('button');
+    btn.className = 'option-btn';
+    btn.dataset.origIdx = origIdx;
+    btn.dataset.shuffledCorrect = correctShuffled;
+    btn.innerHTML = `<span class="option-letter">${letters[i]}</span><span>${q.opts[origIdx]}</span>`;
+    btn.onclick = () => handleAnswer(btn, i === correctShuffled, q);
+    li.appendChild(btn);
+    list.appendChild(li);
+  });
+
+  // Reset feedback
+  const fb = document.getElementById('feedback-box');
+  fb.className = 'feedback-box';
+  document.getElementById('next-btn').classList.add('hidden');
+
+  // Streak
+  const sb = document.getElementById('streak-badge');
+  if (streak >= 2) {
+    sb.classList.remove('hidden');
+    document.getElementById('streak-count').textContent = streak;
+  } else {
+    sb.classList.add('hidden');
+  }
+
+  // Timer
+  startTimer();
+}
+
+let answerStartTime;
+
+function startTimer() {
+  clearInterval(timerInterval); // clear any previous timer before starting a new one
+  timeLeft = TIMER_SECONDS;
+  answerStartTime = Date.now();
+  updateTimerUI();
+
+  timerInterval = setInterval(() => {
+    timeLeft--;
+    updateTimerUI();
+    if (timeLeft <= 0) {
+      clearInterval(timerInterval);
+      if (!answered) handleAnswer(null, false, sessionQuestions[currentIdx], true);
+    }
+  }, 1000);
+}
+
+function updateTimerUI() {
+  // Circumference of the SVG circle: 2π × r = 2π × 14 ≈ 87.96, rounded to 88
+  const circumference = 88;
+  // stroke-dashoffset controls how much of the ring is "empty" — 0 = full, 88 = empty
+  const offset = circumference - (timeLeft / TIMER_SECONDS) * circumference;
+  const circle = document.getElementById('timer-circle');
+  const num = document.getElementById('timer-num');
+  circle.style.strokeDashoffset = offset;
+  num.textContent = timeLeft;
+
+  circle.className = 'fill';
+  if (timeLeft <= 5) circle.classList.add('danger');
+  else if (timeLeft <= 10) circle.classList.add('warning');
+}
+
+function handleAnswer(btn, isCorrect, q, timedOut = false) {
+  if (answered) return;
+  answered = true;
+  clearInterval(timerInterval);
+
+  const elapsed = (Date.now() - answerStartTime) / 1000;
+  if (elapsed < 5 && !timedOut && isCorrect) fastAnswers++;
+
+  const allBtns = document.querySelectorAll('.option-btn');
+
+  if (timedOut) {
+    // Show correct answer
+    allBtns.forEach(b => {
+      if (parseInt(b.dataset.origIdx) === q.correct) b.classList.add('correct');
+      b.disabled = true;
+    });
+    showFeedback(false, '⏰ Zeit abgelaufen! Die richtige Antwort wurde markiert.');
+    streak = 0;
+    document.getElementById('streak-badge').classList.add('hidden');
+  } else {
+    allBtns.forEach(b => {
+      const isThisCorrect = parseInt(b.dataset.origIdx) === q.correct;
+      if (isThisCorrect) b.classList.add('correct');
+      else if (b === btn) b.classList.add('wrong');
+      b.disabled = true;
+    });
+
+    if (isCorrect) {
+      score++;
+      streak++;
+      if (streak > maxStreak) maxStreak = streak;
+
+      // XP formula: base 10 + streak bonus (+5 per answer beyond 2-streak) + speed bonus (+5 if answered in < 5s)
+      const xpGain = 10 + (streak > 2 ? (streak - 2) * 5 : 0) + (elapsed < 5 ? 5 : 0);
+      xp += xpGain;
+      if (q.law) lawCorrect++;
+
+      showFeedback(true, `✅ Richtig! +${xpGain} XP${streak > 2 ? ` 🔥 ${streak}er-Serie!` : ''}`);
+      showToast(`+${xpGain} XP`, 'xp');
+      if (streak === 3) showToast('🔥 3er Serie!', 'streak');
+      if (streak === 5) showToast('🔥 5er Feuer!', 'streak');
+
+      document.getElementById('streak-count').textContent = streak;
+      if (streak >= 2) document.getElementById('streak-badge').classList.remove('hidden');
+      updateXPBar();
+    } else {
+      streak = 0;
+      document.getElementById('streak-badge').classList.add('hidden');
+      showFeedback(false, `❌ Leider falsch. Die richtige Antwort ist markiert.`);
+    }
+
+    if (q.law) lawTotal++;
+  }
+
+  document.getElementById('score-live').textContent = `${score} / ${currentIdx + 1}`;
+
+  sessionLog.push({
+    q: q.q, cat: q.cat, law: q.law,
+    correct: isCorrect && !timedOut,
+    yourAnswer: timedOut ? null : q.opts[parseInt(btn?.dataset?.origIdx)],
+    rightAnswer: q.opts[q.correct]
+  });
+
+  document.getElementById('next-btn').classList.remove('hidden');
+}
+
+function showFeedback(ok, msg) {
+  const box = document.getElementById('feedback-box');
+  box.className = 'feedback-box show ' + (ok ? 'correct-feedback' : 'wrong-feedback');
+  document.getElementById('feedback-text').textContent = msg;
+}
+
+function nextQuestion() {
+  currentIdx++;
+  if (currentIdx >= MAX_QUESTIONS) {
+    showResults();
+  } else {
+    renderQuestion();
+  }
+}
+
+function updateXPBar() {
+  const maxXP = MAX_QUESTIONS * 20;
+  const pct = Math.min((xp / maxXP) * 100, 100);
+  document.getElementById('xp-bar').style.width = pct + '%';
+  document.getElementById('xp-value').textContent = xp + ' XP';
+}
+
+// ─── RESULTS ─────────────────────────────────────────────────────────────
+function showResults() {
+  document.getElementById('quiz-screen').classList.add('hidden');
+  document.getElementById('result-screen').classList.remove('hidden');
+
+  const pct = Math.round((score / MAX_QUESTIONS) * 100);
+  const passed = pct >= 70;
+
+  document.getElementById('result-icon').textContent = passed ? '🎉' : '😔';
+  document.getElementById('result-title').textContent = passed ? 'Bestanden! Glückwunsch!' : 'Knapp daneben...';
+  document.getElementById('result-subtitle').textContent = passed
+    ? 'Du hast den Hundeführerschein-Test erfolgreich absolviert!'
+    : 'Du brauchst mindestens 70% – probiere es nochmal!';
+
+  const pctEl = document.getElementById('result-pct');
+  pctEl.textContent = pct + '%';
+  pctEl.className = 'result-score-big ' + (passed ? 'passed' : 'failed');
+
+  document.getElementById('res-correct').textContent = score;
+  document.getElementById('res-wrong').textContent = MAX_QUESTIONS - score;
+  document.getElementById('res-xp').textContent = xp;
+
+  // Badges
+  const grid = document.getElementById('badges-grid');
+  grid.innerHTML = '';
+  BADGES_DEF.forEach((b, i) => {
+    const earned = b.check(score, MAX_QUESTIONS, xp, maxStreak, lawCorrect, lawTotal, fastAnswers);
+    const div = document.createElement('div');
+    div.className = 'badge' + (earned ? '' : ' locked');
+    div.style.animationDelay = (i * 0.1) + 's';
+    div.innerHTML = `<span class="badge-icon">${b.icon}</span><span class="badge-name">${b.name}</span>`;
+    div.title = b.desc;
+    grid.appendChild(div);
+    if (earned) showToast(`${b.icon} ${b.name} freigeschaltet!`, '');
+  });
+}
+
+function showReview() {
+  const sec = document.getElementById('review-section');
+  sec.classList.toggle('hidden');
+  if (!sec.classList.contains('hidden')) {
+    const list = document.getElementById('review-list');
+    list.innerHTML = '';
+    sessionLog.forEach((item, i) => {
+      const div = document.createElement('div');
+      div.className = 'review-item ' + (item.correct ? 'review-correct' : 'review-wrong');
+      div.innerHTML = `
+        <div class="review-q">${i+1}. ${item.q}</div>
+        <div class="review-a">
+          ${item.correct
+            ? `<span class="correct-ans">✅ ${item.rightAnswer}</span>`
+            : `${item.yourAnswer ? `<span class="wrong-ans">Deine Antwort: ${item.yourAnswer}</span><br>` : '<em>Zeit abgelaufen</em><br>'}
+               <span class="correct-ans">✅ Richtig: ${item.rightAnswer}</span>`}
+        </div>`;
+      list.appendChild(div);
+    });
+    sec.scrollIntoView({ behavior: 'smooth' });
+  }
+}
+</script>
+</body>
+</html>
