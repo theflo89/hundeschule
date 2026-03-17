@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hundeführerschein Quiz – Die Hundetrainerinnen</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="container">
+  <header class="header">
+    <div class="logo-area">
+      <span class="paw-logo">🐾</span>
+      <h1>Hundeführerschein Quiz</h1>
+    </div>
+    <p class="subtitle">Von Die Hundetrainerinnen · Wiefelstede & Oldenburg</p>
+    <div class="divider"></div>
+  </header>
+
+  <!-- START SCREEN -->
+  <div id="start-screen" class="card">
+    <span class="start-icon">🐶</span>
+    <h2 class="start-screen-title">Bereit für den Hundeführerschein?</h2>
+    <p class="start-screen-desc">
+      Teste dein Wissen mit 35 zufällig ausgewählten Fragen aus dem offiziellen Fragenkatalog
+      Niedersachsen. Beweise deine Sachkunde – und verdiene dabei Abzeichen!
+    </p>
+    <div class="stats-row">
+      <div class="stat-pill">❓ 35 Fragen</div>
+      <div class="stat-pill">⏱️ 25 Sek. / Frage</div>
+      <div class="stat-pill">🏆 Abzeichen verdienen</div>
+      <div class="stat-pill">✅ 70% zum Bestehen</div>
+    </div>
+    <button class="btn btn-primary" onclick="startQuiz()">
+      🚀 Quiz starten
+    </button>
+  </div>
+
+  <!-- QUIZ SCREEN -->
+  <div id="quiz-screen" class="hidden">
+    <div class="floating-score" id="floating-score">
+      <div class="score-dot"></div>
+      <span id="score-live">0 / 0</span>
+    </div>
+
+    <div class="card">
+      <!-- XP Bar -->
+      <div class="xp-row">
+        <span class="xp-label">⭐ XP</span>
+        <div class="xp-bar-bg">
+          <div class="xp-bar-fill" id="xp-bar" style="width: 0%"></div>
+        </div>
+        <span class="xp-value" id="xp-value">0 XP</span>
+      </div>
+
+      <!-- Streak -->
+      <div class="streak-badge hidden" id="streak-badge">🔥 <span id="streak-count">0</span> Richtig in Folge!</div>
+
+      <!-- Progress -->
+      <div class="progress-wrapper">
+        <div class="progress-header">
+          <span class="progress-label">Fortschritt</span>
+          <div class="timer-display">
+            <div class="timer-ring">
+              <svg width="34" height="34" viewBox="0 0 34 34">
+                <circle class="bg" cx="17" cy="17" r="14"/>
+                <circle class="fill" id="timer-circle" cx="17" cy="17" r="14"/>
+              </svg>
+              <span class="timer-num" id="timer-num">25</span>
+            </div>
+          </div>
+          <span class="progress-count" id="q-count">1 / 35</span>
+        </div>
+        <div class="progress-bar-bg">
+          <div class="progress-bar-fill" id="progress-fill" style="width: 0%"></div>
+        </div>
+      </div>
+
+      <!-- Question Header -->
+      <div class="quiz-header-row">
+        <span class="category-tag" id="category-tag">Allgemein</span>
+      </div>
+
+      <!-- Question -->
+      <p class="question-text" id="question-text"></p>
+
+      <!-- Options -->
+      <ul class="options-list" id="options-list"></ul>
+
+      <!-- Feedback -->
+      <div class="feedback-box" id="feedback-box">
+        <span id="feedback-icon"></span>
+        <span id="feedback-text"></span>
+      </div>
+
+      <!-- Next -->
+      <div class="next-btn-wrap">
+        <button class="btn btn-primary hidden" id="next-btn" onclick="nextQuestion()">
+          Weiter →
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESULT SCREEN -->
+  <div id="result-screen" class="hidden card">
+    <span class="result-icon" id="result-icon"></span>
+    <h2 class="result-title" id="result-title"></h2>
+    <p class="result-subtitle" id="result-subtitle"></p>
+
+    <div class="result-score-big" id="result-pct"></div>
+    <div class="result-score-label">Gesamtergebnis</div>
+
+    <div class="result-stats">
+      <div class="result-stat">
+        <span class="result-stat-num" id="res-correct">0</span>
+        <span class="result-stat-label">✅ Richtig</span>
+      </div>
+      <div class="result-stat">
+        <span class="result-stat-num" id="res-wrong">0</span>
+        <span class="result-stat-label">❌ Falsch</span>
+      </div>
+      <div class="result-stat">
+        <span class="result-stat-num" id="res-xp">0</span>
+        <span class="result-stat-label">⭐ XP</span>
+      </div>
+    </div>
+
+    <div class="badges-section">
+      <div class="badges-title">🏅 Deine Abzeichen</div>
+      <div class="badges-grid" id="badges-grid"></div>
+    </div>
+
+    <div class="result-actions">
+      <button class="btn btn-primary" onclick="startQuiz()">🔄 Nochmal spielen</button>
+      <button class="btn btn-outline" onclick="showReview()">📋 Auswertung</button>
+    </div>
+
+    <div class="review-section hidden" id="review-section">
+      <div class="review-title">📝 Fragenübersicht</div>
+      <div id="review-list"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script src="quiz.js"></script>
+</body>
+</html>
