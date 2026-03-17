@@ -748,7 +748,6 @@ body::before {
   font-size: 0.7rem;
   font-weight: 900;
   color: var(--red);
-  transform: rotate(90deg);
 }
 
 .quiz-header-row {
